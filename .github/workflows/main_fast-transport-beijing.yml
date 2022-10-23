@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'Fast-Transport-Beijing'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DAB831DB4A944E84AC9B29FDF162EDAD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_20E98187DB644F8BAA5F5179C8899BBB }}
