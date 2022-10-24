@@ -53,12 +53,13 @@ df_bis["date_time"] = pd.to_datetime(df_bis["date_time"])
 
 
 def Feature_1():
+    st.title("Data camp project")
     st.subheader("Feature 1 : Streets with the highest congestion rate")
 
-    # Top 10 streets with the highest congestion rate
+    #Top 10 streets with the highest congestion rate
     st.write("Top 10 streets with the highest congestion rate")
     st.write(df_bis['road'].value_counts().head(10))
-    
+
     #Map of the top 10 streets with the highest congestion rate
     top10_road = df_bis['road'].value_counts().head(10).index.tolist()
     top10_coordinates = df_bis['coordinates'].value_counts().head(10).index.tolist()
@@ -66,23 +67,24 @@ def Feature_1():
     map = folium.Map(location=[39.9075,116.39723],zoom_start=10, control_scale=True)
     for i in range(0, len(top10_coordinates)):
 
-    # transform str coordinates to float coordinates
-    top10_coordinates[i] = str.replace(top10_coordinates[i], "'", "")
-    top10_coordinates[i] = str.replace(top10_coordinates[i], "(", "")
-    top10_coordinates[i] = str.replace(top10_coordinates[i], ")", "")
-    top10_coordinates[i] = top10_coordinates[i].split(",")
-    latitude = float(top10_coordinates[i][0])
-    longitude = float(top10_coordinates[i][1])
-    
-    # add markers to map
-    folium.Marker([latitude, longitude], popup=top10_road[i]).add_to(map)
+        # transform str coordinates to float coordinates
+        top10_coordinates[i] = str.replace(top10_coordinates[i], "'", "")
+        top10_coordinates[i] = str.replace(top10_coordinates[i], "(", "")
+        top10_coordinates[i] = str.replace(top10_coordinates[i], ")", "")
+        top10_coordinates[i] = top10_coordinates[i].split(",")
+        latitude = float(top10_coordinates[i][0])
+        longitude = float(top10_coordinates[i][1])
+
+        # add markers to map
+        folium.Marker([latitude, longitude], popup=top10_road[i]).add_to(map)
     folium_static(map)
 
-    # Top 10 streets with the highest congestion rate at a given time
+
+    #Top 10 streets with the highest congestion rate at a given time
     st.write("Top 10 streets with the highest congestion rate at a given time")
     with st.form(key='Feature_1_1'):
-        date = st.date_input('Date', value=pd.to_datetime('2008-02-02'))
-        time = st.time_input('Time', value=pd.to_datetime('14:19:00'))
+        date = st.date_input('Date',value=pd.to_datetime('2008-02-02'))
+        time = st.time_input('Time',value=pd.to_datetime('14:19:00'))
         final_date = datetime.datetime.combine(date, time)
         final_date = pd.to_datetime(final_date)
         # add one minute to the time
@@ -90,17 +92,15 @@ def Feature_1():
         submit_button = st.form_submit_button(label='Submit')
 
     if submit_button:
-        st.write(df_bis[(df_bis['date_time'] > final_date) & (
-            df_bis['date_time'] < date_bis)]['road'].value_counts().head(10))
+        st.write(df_bis[(df_bis['date_time'] > final_date) & (df_bis['date_time'] < date_bis)]['road'].value_counts().head(10))
 
-    # The 10 streets with the highest congestion rate at a given time interval
-    st.write(
-        "The 10 streets with the highest congestion rate at a given time interval")
+    #The 10 streets with the highest congestion rate at a given time interval
+    st.write("The 10 streets with the highest congestion rate at a given time interval")
     with st.form(key='Feature_1_2'):
-        date = st.date_input('Date', value=pd.to_datetime('2008-02-02'))
-        time = st.time_input('Time', value=pd.to_datetime('14:19:00'))
-        date2 = st.date_input('Date', value=pd.to_datetime('2008-02-03'))
-        time2 = st.time_input('Time', value=pd.to_datetime('11:20:00'))
+        date = st.date_input('Date',value=pd.to_datetime('2008-02-02'))
+        time = st.time_input('Time',value=pd.to_datetime('14:19:00'))
+        date2 = st.date_input('Date',value=pd.to_datetime('2008-02-03'))
+        time2 = st.time_input('Time',value=pd.to_datetime('11:20:00'))
         final_date = datetime.datetime.combine(date, time)
         final_date = pd.to_datetime(final_date)
         final_date2 = datetime.datetime.combine(date2, time2)
@@ -108,9 +108,7 @@ def Feature_1():
         submit_button = st.form_submit_button(label='Submit')
 
     if submit_button:
-        st.write(df_bis[(df_bis['date_time'] > final_date) & (
-            df_bis['date_time'] < final_date2)]['road'].value_counts().head(10))
-
+        st.write(df_bis[(df_bis['date_time'] > final_date) & (df_bis['date_time'] < final_date2)]['road'].value_counts().head(10))
 
 # ***********************************************************************************
 # ************************************ Feature 2 ************************************
