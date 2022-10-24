@@ -58,6 +58,25 @@ def Feature_1():
     # Top 10 streets with the highest congestion rate
     st.write("Top 10 streets with the highest congestion rate")
     st.write(df_bis['road'].value_counts().head(10))
+    
+    #Map of the top 10 streets with the highest congestion rate
+    top10_road = df_bis['road'].value_counts().head(10).index.tolist()
+    top10_coordinates = df_bis['coordinates'].value_counts().head(10).index.tolist()
+
+    map = folium.Map(location=[39.9075,116.39723],zoom_start=10, control_scale=True)
+    for i in range(0, len(top10_coordinates)):
+
+    # transform str coordinates to float coordinates
+    top10_coordinates[i] = str.replace(top10_coordinates[i], "'", "")
+    top10_coordinates[i] = str.replace(top10_coordinates[i], "(", "")
+    top10_coordinates[i] = str.replace(top10_coordinates[i], ")", "")
+    top10_coordinates[i] = top10_coordinates[i].split(",")
+    latitude = float(top10_coordinates[i][0])
+    longitude = float(top10_coordinates[i][1])
+    
+    # add markers to map
+    folium.Marker([latitude, longitude], popup=top10_road[i]).add_to(map)
+    folium_static(map)
 
     # Top 10 streets with the highest congestion rate at a given time
     st.write("Top 10 streets with the highest congestion rate at a given time")
