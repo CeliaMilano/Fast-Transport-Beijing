@@ -241,13 +241,14 @@ def Feature_2():
 # ***********************************************************************************
 
 def Feature_3():
+
     st.subheader("Feature 3 : The average car density of the city")
 
     # ********* Top 10 streets with the highest congestion rate at a given time ********
     st.write("Density of the city at a given time")
     with st.form(key='Feature_2_1'):
-        date = st.date_input('Date', value=pd.to_datetime('2008-02-02'))
-        time = st.time_input('Time', value=pd.to_datetime('14:19:00'))
+        date = st.date_input('Date',value=pd.to_datetime('2008-02-02'))
+        time = st.time_input('Time',value=pd.to_datetime('14:19:00'))
         final_date = datetime.datetime.combine(date, time)
         final_date = pd.to_datetime(final_date)
         # add one minute to the time
@@ -255,11 +256,10 @@ def Feature_3():
         submit_button = st.form_submit_button(label='Submit')
 
     if submit_button:
-        st.write("The number of vehicules in Benjing at this time is equal to", df_bis[(
-            df_bis['date_time'] > final_date) & (df_bis['date_time'] < date_bis)].shape[0])
+        st.write("The number of vehicules in Benjing at this time is equal to", df_bis[(df_bis['date_time'] > final_date) & (df_bis['date_time'] < date_bis)].shape[0])
 
     # ********************* Average car density of the city by hour ********************
-
+    from datetime import datetime
     # create a column with the hour of the day
     df_bis['hour'] = df_bis['date_time'].dt.hour
     # create a column with the day of the week
@@ -267,25 +267,31 @@ def Feature_3():
     df_bis['month'] = df_bis['date_time'].dt.month
     df_bis['year'] = df_bis['date_time'].dt.year
 
-    # list with the average car density by hour
-    average_list = [0]*24
+    #list with the average car density by hour
+    average_list=[0]*24
 
-    for i in range(0, 24):
-        # sort by hour i
+    for i in range(0,24):
+        # sort by hour i 
         df_2 = df_bis[(df_bis['hour'] == i)]
 
-        # nb_cars = number of cars at i hour
+        #nb_cars = number of cars at i hour
         nb_cars = df_2.shape[0]
-        df_2 = df_2.drop_duplicates(
-            subset=['day', 'month', 'year'], keep='first')
+        df_2 = df_2.drop_duplicates(subset=['day','month','year'], keep='first')
 
-        # nb_of_days = number of days where at least one car drive at i hour
-        nb_of_days = len(df_2)
+        #nb_of_days = number of days on which we do the average
+
+        max_ = max(df_2['date_time'])
+        max_ = max_.day
+
+        min_ = min(df_2['date_time'])
+        min_ = min_.day
+        nb_of_days = max_ - min_
 
         average = nb_cars/nb_of_days
         average_list[i] = average
 
-    # graph of the average car density of the city by hour
+
+    # graph of the average car density of the city by hour 
     st.write("Average car density of the city by hour")
     st.bar_chart(average_list)
 
