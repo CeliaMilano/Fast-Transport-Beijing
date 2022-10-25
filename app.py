@@ -241,7 +241,6 @@ def Feature_2():
 # ***********************************************************************************
 
 def Feature_3():
-
     st.subheader("Feature 3 : The average car density of the city")
 
     # ********* Top 10 streets with the highest congestion rate at a given time ********
