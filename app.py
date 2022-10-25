@@ -292,9 +292,9 @@ def Feature_3():
         average = nb_cars/nb_of_days
         average_list[i] = average
 
-     # graph of the average car density of the city by hour 
-     st.write("Average car density of the city by hour")
-     st.bar_chart(average_list)
+    # graph of the average car density of the city by hour 
+    st.write("Average car density of the city by hour")
+    st.bar_chart(average_list)
 
 
 # ***********************************************************************************
